@@ -67,6 +67,12 @@ OpportunityScout → ProjectManager → Requirements → Architect → Developer
 | `开工` / `start` | 从 **待机（IDLE）** 进入执行：若无存盘状态则从 **机会发现** 开始；若存在未完成工作流则 **拒绝**（需先 `恢复` 或明确 `重置`） |
 | `下班` / `shutdown` | 将当前 **工作流状态 + artifacts + 待审批点** 写入快照；进入 **下班（SHUTDOWN）** 态，进程可退出 |
 | `恢复` / `resume` | 从最新快照恢复，从 **等待审批** 或 **下一阶段起点** 继续（见 `memory/session_snapshot.py`） |
+
+### 4.1 下班前提交（版本库纪律）
+
+- **约定**：在结束当日工作或执行 CLI **`下班` / `shutdown`** 之前，负责本仓库的真人或受托 Agent 应完成 **至少一次 Git 提交**（`git commit`），将当前已通过自检的 **源码与文档**（含 `AGENTS.md` 等契约）写入版本库。
+- **与快照的关系**：§6 中的 `memory/history/<project_id>/` 持久化 **编排运行态与阶段产物**；Git 持久化 **仓库内可协作、可回溯的工程变更**。二者互补，缺一不可。
+- **推荐顺序**：`git status` → 处理未跟踪/未暂存项 → `git commit` → 需要远程备份时 `git push` → 再执行 `python main.py 下班`（若当日使用了 FQAgent 工作流）。
 | `确认` / `approve` | 在安全模式下，对当前 **WAITING_APPROVAL** 解锁，进入下一阶段 |
 | `重置` / `reset` | 清除当前 `project_id` 的运行态与可选快照（慎用；需二次确认由 CLI 标志控制） |
 
@@ -87,7 +93,7 @@ OpportunityScout → ProjectManager → Requirements → Architect → Developer
 3. **事件日志**：`memory/history/<project_id>/events.jsonl` — 追加 JSON 行，便于审计与回放。
 4. **产物归档**：各阶段 `artifacts` 随快照保存；恢复时完整加载。
 
-**原则**：任何「不可丢」的信息必须落在快照或 `events.jsonl` 中，不得仅依赖模型上下文。
+**原则**：任何「不可丢」的信息必须落在快照或 `events.jsonl` 中，不得仅依赖模型上下文。与 §4.1 一致：**契约与源码级变更**还须落在 Git 提交中。
 
 ---
 
@@ -108,4 +114,4 @@ OpportunityScout → ProjectManager → Requirements → Architect → Developer
 
 修订本文档时：更新版本说明、同步 `docs/architecture/system-overview.md`，并补充/调整测试，避免角色职责漂移。
 
-**版本**：首版 1.0（与仓库首次实现同步）
+**版本**：1.1 — 补充「下班前 Git 提交」工程纪律（与 1.0 实现兼容）

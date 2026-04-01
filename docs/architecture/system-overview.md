@@ -50,5 +50,6 @@ stateDiagram-v2
 - 目录：`memory/history/<project_id>/`
 - `snapshot.json`：完整可恢复状态 + `artifacts`
 - `events.jsonl`：只追加事件行
+- **版本库**：编排快照不等价于 Git；下班前应对仓库内源码与契约文档做 **Git 提交**（见 [`AGENTS.md`](../../AGENTS.md) §4.1）。
 
 详见根目录 [`AGENTS.md`](../../AGENTS.md)。
