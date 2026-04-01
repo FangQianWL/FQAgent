@@ -1,0 +1,12 @@
+# 运行时记忆（保留 memory/history/.gitkeep）
+memory/history/**
+!memory/history/.gitkeep
+
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+dist/
+build/

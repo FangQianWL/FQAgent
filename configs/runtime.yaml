@@ -1,0 +1,6 @@
+# FQAgent 运行时配置
+default_project_id: fq-default
+storage_root: memory/history
+
+# 安全模式：每阶段结束等待审批（勿改为 false，除非同步修改 AGENTS.md）
+safe_mode: true

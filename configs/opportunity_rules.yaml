@@ -1,0 +1,26 @@
+version: "1"
+output:
+  top_n: 5
+
+weights:
+  tam: 0.25
+  low_competition: 0.2
+  low_effort: 0.2
+  monetization: 0.2
+
+effort:
+  max_weeks_for_full_score: 16
+
+segments:
+  developer_tools:
+    bonus: 0.5
+  automation:
+    bonus: 0.3
+  ai_saas:
+    bonus: 0.2
+
+scoring:
+  max_score: 100
+
+# 可选：自定义种子机会（留空则使用代码内默认种子）
+seed_opportunities: null
